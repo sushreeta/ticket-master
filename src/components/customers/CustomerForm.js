@@ -9,22 +9,26 @@ export default class CustomerForm extends React.Component{
                mobile:''
           }
      }
-     handleChange = e => {
+     handleChange = (e) => {
+          console.log('customerform handleChange')
           this.setState({
                [e.target.name] : e.target.value
           })
      }
 
      handleSubmit = e =>{
+          console.log("Customerform handleSubmit",this.state)
           e.preventDefault()
           const formData = {
                name: this.state.name,
                email: this.state.email,
-               mobile:this.state.mobile
+               mobile:this.state.mobile    
           }
+          console.log(formData)
           this.props.handleSubmit(formData)
      }
      render(){
+          console.log("customerform render", this.state)
           return(
                <div>
                     <form>

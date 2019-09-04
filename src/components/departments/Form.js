@@ -1,5 +1,4 @@
 import React from 'react'
-import axios from '../../config/axios';
 
 export default class DepartmentForm extends React.Component{
      constructor(props){

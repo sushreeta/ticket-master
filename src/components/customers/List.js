@@ -1,21 +1,25 @@
 import React from 'react'
+
 import axios from '../../config/axios'
-import {BrowserRouter, Link, Route} from 'react-router-dom'
+import {Link} from 'react-router-dom'
 
 export default class CustomerList extends React.Component {
      constructor(){
           super()
           this.state={
-               customers:[],
-               isLoading:true
+               customers:[]
           }
      }
      componentDidMount(){
-          axios.get('/customers')
-               .then(response=>{
+          console.log('componentDidMount CustomerList')
+          axios.get('/customers',{
+               headers:{
+                    "x-auth":localStorage.getItem("token")
+               }})
+               .then(response => {
                     console.log(response.data)
                     const customers = response.data
-                    this.setState({customers, isLoading:false})
+                    this.setState({customers})
                })
                .catch(err=>{
                     console.log(err)

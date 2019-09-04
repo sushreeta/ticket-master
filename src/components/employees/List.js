@@ -1,4 +1,5 @@
 import React from 'react'
+import {Link} from 'react-router-dom'
 import axios from '../../config/axios'
 
 export default class EmplyeeList extends React.Component{
@@ -9,6 +10,7 @@ export default class EmplyeeList extends React.Component{
           }
      }
      componentDidMount(){
+          console.log('Employee ComponentDidMount', this.state)
           axios.get('./employees',{
                headers:{
                     'x-auth':localStorage.getItem('token')
@@ -16,6 +18,8 @@ export default class EmplyeeList extends React.Component{
           })
           .then( response => {
                console.log(response.data)
+               const employees = response.data
+               this.setState({employees})
           })
           .catch( err => {
                console.log(err)
@@ -23,9 +27,10 @@ export default class EmplyeeList extends React.Component{
 
      }
      render(){
+          console.log('EmployeeList', this.state)
           return (
                <div>
-                    <h2>List of Employees - {this.state.employees}</h2>
+                    <h2>List of Employees - {this.state.employees.length}</h2>
                     <table>
                          <thead>
                               <tr>
@@ -37,10 +42,10 @@ export default class EmplyeeList extends React.Component{
                          <tbody>
                               {this.state.employees.map((employee,index)=>{
                                    return (
-                                        <tr key>
+                                        <tr key={employee._id}>
                                              <th>{index + 1}</th>
-                                             <th>{employee.name}</th>
-                                             <th>{employee.department}</th>
+                                             <th><Link to={`employees/show/${employee._id}`}>{employee.name}</Link></th>
+                                             <th>{employee.department.name}</th>
                                         </tr>
                                    )
                               })}
